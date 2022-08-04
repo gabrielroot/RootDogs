@@ -7,7 +7,7 @@ const LoginForm = () => {
   const handleSubmit = e => {
     e.preventDefault()
 
-    fetch('https://dogsapi.origamid.dev/json/jwt-auth/v1/token', {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/jwt-auth/v1/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
