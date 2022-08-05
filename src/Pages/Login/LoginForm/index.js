@@ -1,43 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Input } from '../../../Components'
+import { useForm } from '../../../Hooks'
+import { TOKEN_POST, USER_GET } from '../../../Utils/fetch'
 
 const LoginForm = () => {
-  const [user, setUser] = useState({ username: '', password: '' })
+  const username = useForm()
+  const password = useForm()
 
-  const handleSubmit = e => {
+  useEffect(() => {
+    async function fetchData() {
+      const token = window.localStorage.getItem('token')
+      if (token) console.log(await getUser(token))
+    }
+
+    fetchData()
+  }, [])
+
+  async function getUser() {
+    return await USER_GET(window.localStorage.getItem('token'))
+  }
+
+  const handleSubmit = async e => {
     e.preventDefault()
+    if (!(username.validate() && password.validate())) return
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/jwt-auth/v1/token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ ...user })
+    const data = await TOKEN_POST({
+      username: username.value,
+      password: password.value
     })
-      .then(response => {
-        console.log(response)
-        return response.json()
-      })
-      .then(json => {
-        console.log(json)
-      })
+
+    if (data && data.token) {
+      window.localStorage.setItem('token', data.token)
+      console.log(await getUser(data.token))
+    } else console.log(data)
   }
 
   return (
     <section>
       <h1>Login</h1>
       <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={user.username}
-          onChange={e => setUser({ ...user, username: e.target.value })}
-        />
-        <input
-          type="password"
-          value={user.password}
-          onChange={e => setUser({ ...user, password: e.target.value })}
-        />
-        <button>Login</button>
+        <Input name="username" label="Username" {...username} />
+        <Input name="password" label="Password" type="password" {...password} />
+        <Button>Login</Button>
       </form>
       <Link to="/login/register">Register</Link>
     </section>
