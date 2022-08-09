@@ -11,6 +11,7 @@ const Input = ({ id, name, label, type, value, onBlur, onChange, error }) => {
         id={id}
         name={name}
         className={styles.input}
+        autoComplete="off"
         type={type}
         value={value}
         onBlur={onBlur}
