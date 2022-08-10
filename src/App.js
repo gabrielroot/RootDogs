@@ -8,8 +8,8 @@ import { UserStorage } from './Contexts/UserContext'
 const App = () => {
   return (
     <Fragment>
-      <UserStorage>
-        <BrowserRouter>
+      <BrowserRouter>
+        <UserStorage>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -20,8 +20,8 @@ const App = () => {
             />
           </Routes>
           <Footer />
-        </BrowserRouter>
-      </UserStorage>
+        </UserStorage>
+      </BrowserRouter>
     </Fragment>
   )
 }
