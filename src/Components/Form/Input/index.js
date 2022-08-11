@@ -1,10 +1,22 @@
 import React from 'react'
+import HasError from '../../FormFeedback/HasError'
 import styles from './Input.module.css'
 
-const Input = ({ id, name, label, type, value, onBlur, onChange, error }) => {
+const Input = ({
+  id,
+  name,
+  label,
+  type,
+  value,
+  onBlur,
+  onChange,
+  error,
+  required
+}) => {
   return (
     <div className={styles.wrapper}>
       <label htmlFor={name} className={styles.label}>
+        {required && <span style={{ color: 'red' }}>* </span>}
         {label}:
       </label>
       <input
@@ -17,7 +29,8 @@ const Input = ({ id, name, label, type, value, onBlur, onChange, error }) => {
         onBlur={onBlur}
         onChange={onChange}
       />
-      {error && <p className={styles.error}>{error}</p>}
+      <HasError error={error} />
+      {/* {error && <p className={styles.error}>{error}</p>} */}
     </div>
   )
 }
