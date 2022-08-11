@@ -30,7 +30,6 @@ const Input = ({
         onChange={onChange}
       />
       <HasError error={error} />
-      {/* {error && <p className={styles.error}>{error}</p>} */}
     </div>
   )
 }
