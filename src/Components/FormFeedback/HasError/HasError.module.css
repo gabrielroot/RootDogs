@@ -1,0 +1,17 @@
+.hasError {
+  color: #f31;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: baseline;
+}
+
+.hasError::before {
+  content: 'x';
+  display: inline-block;
+  margin-bottom: 0.2rem;
+  padding: 0.2rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: #f31;
+}

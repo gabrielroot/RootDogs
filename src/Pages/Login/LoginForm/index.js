@@ -1,45 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { Button, HasError, Input } from '../../../Components'
+import { useForm } from '../../../Hooks'
+import { UserContext } from '../../../Contexts/UserContext'
+import styles from './LoginForm.module.css'
+import btnStyles from '../../../Components/Form/Button/Button.module.css'
 
 const LoginForm = () => {
-  const [user, setUser] = useState({ username: '', password: '' })
+  const { userLogin, error, loading } = useContext(UserContext)
 
-  const handleSubmit = e => {
+  const username = useForm()
+  const password = useForm()
+
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/jwt-auth/v1/token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ ...user })
-    })
-      .then(response => {
-        console.log(response)
-        return response.json()
-      })
-      .then(json => {
-        console.log(json)
-      })
+    if (!(username.validate() && password.validate())) return
+
+    userLogin(username.value, password.value)
   }
 
   return (
-    <section>
-      <h1>Login</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={user.username}
-          onChange={e => setUser({ ...user, username: e.target.value })}
-        />
-        <input
+    <section className="zoomIn">
+      <h1 className="title">Login</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <Input name="username" label="Username" required {...username} />
+        <Input
+          name="password"
+          label="Password"
           type="password"
-          value={user.password}
-          onChange={e => setUser({ ...user, password: e.target.value })}
+          required
+          {...password}
         />
-        <button>Login</button>
+        <div className={styles.formActions}>
+          <div>
+            {loading ? (
+              <Button disabled>Carregando...</Button>
+            ) : (
+              <Button>Login</Button>
+            )}
+            <HasError error={error} />
+          </div>
+          <Link className={styles.forgot} to="/login/forgot">
+            Forgot password?
+          </Link>
+        </div>
       </form>
-      <Link to="/login/register">Register</Link>
+      <div className={styles.register}>
+        <h2 className={styles.subtitle}>Register</h2>
+        <p>Don't have an account? Register now!</p>
+        <Link className={btnStyles.button} to="/login/register">
+          Register
+        </Link>
+      </div>
     </section>
   )
 }
