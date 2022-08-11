@@ -15,7 +15,7 @@ const index = () => {
   if (login === true) return <Navigate to="/account" />
 
   return (
-    <section className={styles.login}>
+    <section className={`${styles.login} zoomIn`}>
       <div className={styles.forms}>
         <Routes>
           <Route path="/" element={<LoginForm />} />

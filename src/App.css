@@ -47,6 +47,7 @@ input {
   font-size: 3rem;
   margin: 1rem 0;
   position: relative;
+  text-shadow: -1px 2px 3px #463f2f;
   z-index: 1;
 }
 
