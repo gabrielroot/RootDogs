@@ -20,6 +20,8 @@ const LoginRegister = () => {
       password: password.value
     }
 
+    if (!(password.validate() && username.validate() && email.validate())) return
+
     const { response } = await api.post('/api/user', body)
 
     if (response.ok) userLogin(username.value, password.value)
