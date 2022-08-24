@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react'
 import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from '../Utils/fetch'
+import { setToken, removeToken, getToken } from '../Utils/storage'
 import { useNavigate } from 'react-router-dom'
 
 export const UserContext = createContext()
@@ -15,7 +16,7 @@ export const UserStorage = ({ children }) => {
   useEffect(() => {
     async function autoLogin() {
       try {
-        const token = window.localStorage.getItem('token')
+        const token = getToken()
 
         if (token) {
           const response = await TOKEN_VALIDATE_POST(token)
@@ -37,7 +38,7 @@ export const UserStorage = ({ children }) => {
     setError(null)
     setLoading(false)
     setLogin(false)
-    window.localStorage.removeItem('token')
+    removeToken()
     navigate('/login')
   }
 
@@ -57,7 +58,7 @@ export const UserStorage = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json()
-        window.localStorage.setItem('token', data.token)
+        setToken(data.token)
         await getUser(data.token)
       } else {
         throw new Error(
