@@ -4,6 +4,10 @@ const types = {
   email: {
     regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
     message: 'Bad pattern: Insert a valid email.'
+  },
+  password: {
+    regex: ENV === 'development' ? /()/ : /^(?=.*([a-z]|ç))(?=.*([A-Z]|Ç)).{6,}$/,
+    message: 'The password must be at least 1 lower and 1 upper case, with a minimum length of 6 characters.'
   }
 }
 

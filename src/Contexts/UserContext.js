@@ -6,7 +6,7 @@ export const UserContext = createContext()
 
 export const UserStorage = ({ children }) => {
   const [data, setData] = useState(null)
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
