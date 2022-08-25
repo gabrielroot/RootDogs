@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const ENV = process.env.REACT_APP_ENVIRONMENT
+
 const types = {
   email: {
     regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,

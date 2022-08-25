@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, HasError, Input } from '../../../Components'
 import { useForm } from '../../../Hooks'
@@ -24,8 +24,15 @@ const LoginForm = () => {
     <section className="zoomIn">
       <h1 className="title">Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input name="username" label="Username" required {...username} />
         <Input
+          id="username"
+          name="username"
+          label="Username"
+          required
+          {...username}
+        />
+        <Input
+          id="password"
           name="password"
           label="Password"
           type="password"
